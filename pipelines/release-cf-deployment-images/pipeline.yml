@@ -46,7 +46,7 @@ jobs:
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
           CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
-          RELEASE: <%= release %>
+          RELEASE: uaa
           DOCKER_REGISTRY: ((docker-registry))
           DOCKER_ORGANIZATION: ((docker-organization))
           DOCKER_TEAM_USERNAME: ((dockerhub.username))
