@@ -1,10 +1,5 @@
 # This pipeline will setup the build for all the cf_deployment_releases specified below.
 
-<%
-parallel_builds = 5 # How many builds we run in parallel
-cf_deployment_tags = %w(v12.18.0)
-releases = %w(uaa)
-%>
 
 resources:
 - name: ci
@@ -17,14 +12,12 @@ resources:
   source:
     uri: ((docker-image-resource-repo))
     branch: ((docker-image-resource-branch))
-<% cf_deployment_tags.each do |cf_deployment_tag| %>
-- name: cf-deployment-<%= cf_deployment_tag %>
+- name: cf-deployment-v12.18.0
   type: git
   source:
     uri: ((cf-deployment-repo))
     branch: ((cf-deployment-branch))
-    tag_filter: <%= cf_deployment_tag %>
-<% end %>
+    tag_filter: v.12.18.0
 - name: s3.fissile-linux
   type: file-url
   source:
@@ -33,17 +26,12 @@ resources:
     skip-ssl-verification: true    
 
 jobs:
-  <%
-  releases.each_with_index do |release, i|
-    serial_group = "serial_group_#{i % parallel_builds}"
-  %>
-  - name: build-<%= cf_deployment_tag %>-<%= release %>
-    serial_groups: [ <%= serial_group %> ]
+  - name: build-v12.18.0-uaa
     plan:
     - in_parallel:
       - get: ci
       - get: docker-image-resource
-      - get: cf-deployment-<%= cf_deployment_tag %>
+      - get: cf-deployment-v12.18.0
       - get: s3.fissile-linux
     - do:
       - task: build
@@ -51,7 +39,7 @@ jobs:
         timeout: 1h30m
         input_mapping:
           s3.stemcell-version: s3.fissile-stemcell-version
-          cf-deployment: cf-deployment-<%= cf_deployment_tag %>
+          cf-deployment: cf-deployment-v12.18.0
         params:
           GOPROXY: ((goproxy))
           STEMCELL_OS: ((stemcell-os))
@@ -65,5 +53,3 @@ jobs:
           DOCKER_TEAM_PASSWORD_RW: ((dockerhub.password))
           STEMCELL_VERSION: ((stemcell-version)) 
         file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
-  <% end %>
-<% end %>
