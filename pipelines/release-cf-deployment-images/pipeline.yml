@@ -29,16 +29,8 @@ resources:
   type: file-url
   source:
     url: https://www.dropbox.com/s/eu6h50r86pkgia4/fissile-4.3.tar.gz?dl=0
-    filename: fissile-4.tar.gz
+    filename: fissile.tar.gz
     skip-ssl-verification: true    
-- name: s3.fissile-stemcell-version
-  type: s3
-  source:
-    bucket: ((stemcell-versions-s3-bucket))
-    region_name: ((stemcell-s3-bucket-region))
-    access_key_id: ((s3.accessKey))
-    secret_access_key: ((s3.secretKey))
-    versioned_file: ((stemcell-version-file))
 
 jobs:
   <%

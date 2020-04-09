@@ -12,4 +12,4 @@ params:
   CF_DEPLOYMENT_YAML:
   RELEASES:
 run:
-  path: ci/pipelines/release-images-cf-deployment/tasks/prepare_build.sh
+  path: ci/pipelines/release-cf-deployment-images/tasks/prepare_build.sh

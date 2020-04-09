@@ -1,4 +1,4 @@
-ci-repo: https://github.com/cloudfoundry-incubator/cf-operator-ci
+ci-repo: https://github.com/chauhanr/kcf-build-ci.git
 ci-branch: master
 docker-image-resource-repo: https://github.com/concourse/docker-image-resource
 docker-image-resource-branch: master
@@ -12,5 +12,7 @@ stemcell-versions-s3-bucket: cf-operators
 stemcell-version-file: fissile-stemcell-versions/fissile-stemcell-sle15-version
 stemcell-s3-bucket-region: us-east-1
 docker-registry: docker.io
-docker-organization: cfcontainerization
+docker-organization: chauhanr
+dockerhub-username: chauhanr
+dockerhub-password: Schumi#6 
 stemcell-version: 42.3-51.g7fef1b7-30.95

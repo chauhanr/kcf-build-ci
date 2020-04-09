@@ -20,4 +20,4 @@ params:
   DOCKER_TEAM_PASSWORD_RW:
   STEMCELL_VERSION:
 run:
-  path: ci/pipelines/release-images-cf-deployment/tasks/build.sh
+  path: ci/pipelines/release-cf-deployment-images/tasks/build.sh
