@@ -1,0 +1,16 @@
+ci-repo: https://github.com/cloudfoundry-incubator/cf-operator-ci
+ci-branch: master
+docker-image-resource-repo: https://github.com/concourse/docker-image-resource
+docker-image-resource-branch: master
+cf-deployment-repo: https://github.com/cloudfoundry/cf-deployment
+cf-deployment-branch: master
+cf-deployment-yaml: cf-deployment/cf-deployment.yml
+fissile-linux-s3-bucket: cf-opensusefs2
+stemcell-os: sle15
+stemcell-repository: splatform/fissile-stemcell-sle
+stemcell-versions-s3-bucket: cf-operators
+stemcell-version-file: fissile-stemcell-versions/fissile-stemcell-sle15-version
+stemcell-s3-bucket-region: us-east-1
+docker-registry: docker.io
+docker-organization: cfcontainerization
+stemcell-version: 42.3-51.g7fef1b7-30.95
