@@ -49,7 +49,7 @@ jobs:
           RELEASE: uaa
           DOCKER_REGISTRY: ((docker-registry))
           DOCKER_ORGANIZATION: ((docker-organization))
-          DOCKER_TEAM_USERNAME: ((dockerhub.username))
-          DOCKER_TEAM_PASSWORD_RW: ((dockerhub.password))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
           STEMCELL_VERSION: ((stemcell-version)) 
         file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
