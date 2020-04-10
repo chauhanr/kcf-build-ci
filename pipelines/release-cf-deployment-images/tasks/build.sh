@@ -25,7 +25,7 @@ echo "${DOCKER_TEAM_PASSWORD_RW}" | docker login "${DOCKER_REGISTRY}" --username
 tar xvf ./s3.fissile-linux/fissile-4.3.tar.gz --directory "/usr/local/bin/"
 
 # Pull the stemcell image.
-stemcell_version="${STEMCELL_VERSION}""
+stemcell_version="${STEMCELL_VERSION}"
 stemcell_image="${STEMCELL_REPOSITORY}:${stemcell_version}"
 docker pull "${stemcell_image}"
 
