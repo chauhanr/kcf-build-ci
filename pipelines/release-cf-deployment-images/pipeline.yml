@@ -23,7 +23,7 @@ resources:
   source:
     uri: ((cf-deployment-repo))
     branch: ((cf-deployment-branch))
-    tag_filter: v.12.18.0
+    tag_filter: v12.18.0
 - name: s3.fissile-linux
   type: file-url
   source:
