@@ -31,12 +31,11 @@ docker pull "${stemcell_image}"
 
 # Build the releases.
 tasks_dir="$(dirname $0)"
-echo ${tast_dir}
-echo ${DOCKER_REGISTRY}
-echo ${DOCKER_ORGANIZATION}
-echo ${DOCKER_TEAM_USERNAME}
-echo ${STEMCELL_OS}
-echo ${stemcell_image}
-echo ${stemcell_version}
 
-bash <(yq -r ".manifest_version as \$cf_version | .releases[] | select(.name==\"${RELEASE}\") | \"source ${tasks_dir}/build_release.sh; build_release \\(\$cf_version|@sh) '${DOCKER_REGISTRY}' '${DOCKER_ORGANIZATION}' '${DOCKER_TEAM_USERNAME}' '${DOCKER_TEAM_PASSWORD_RW}' '${STEMCELL_OS}' '${stemcell_version}' '${stemcell_image}' \\(.name|@sh) \\(.url|@sh) \\(.version|@sh) \\(.sha1|@sh)\"" "${CF_DEPLOYMENT_YAML}")
+CF_VERSION=$(yq -r .manifest_version ${CF_DEPLOYMENT_YAML})
+RELEASE_NAME=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .name" ${CF_DEPLOYMENT_YAML})
+RELEASE_URL=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .url" ${CF_DEPLOYMENT_YAML})
+RELEASE_VERSION=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .version" ${CF_DEPLOYMENT_YAML})
+RELEASE_SHA=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .sha1" ${CF_DEPLOYMENT_YAML})
+
+source ${task_dir}/build_release.sh; build_release ${CF_VERSION} ${DOCKER_REGISTRY} ${DOCKER_ORGANIZATION} ${DOCKER_TEAM_USERNAME} ${DOCKER_TEAM_PASSWORD_RW} ${STEMCELL_OS} ${stemcell_version} ${stemcell_image} ${RELEASE_NAME} ${RELEASE_URL} ${RELEASE_VERSION} ${RELEASE_SHA}
