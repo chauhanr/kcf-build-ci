@@ -27,8 +27,8 @@ resources:
 - name: s3.fissile-linux
   type: file-url
   source:
-    url: https://www.dropbox.com/s/eu6h50r86pkgia4/fissile-4.3.tar.gz?dl=0
-    filename: fissile-4.3.tar.gz
+    url: https://cf-opensusefs2.s3.amazonaws.com/fissile/develop/fissile-7.0.0%2B374.gb8e8e6af.linux-amd64.tgz
+    filename: fissile.tgz
     skip-ssl-verification: true    
 
 jobs:
