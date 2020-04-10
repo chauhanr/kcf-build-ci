@@ -38,4 +38,4 @@ RELEASE_URL=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .url" ${CF_DE
 RELEASE_VERSION=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .version" ${CF_DEPLOYMENT_YAML})
 RELEASE_SHA=$(yq -r ".releases[] | select(.name==\"${RELEASE}\") | .sha1" ${CF_DEPLOYMENT_YAML})
 
-source ${task_dir}/build_release.sh; build_release ${CF_VERSION} ${DOCKER_REGISTRY} ${DOCKER_ORGANIZATION} ${DOCKER_TEAM_USERNAME} ${DOCKER_TEAM_PASSWORD_RW} ${STEMCELL_OS} ${stemcell_version} ${stemcell_image} ${RELEASE_NAME} ${RELEASE_URL} ${RELEASE_VERSION} ${RELEASE_SHA}
+source ${tasks_dir}/build_release.sh; build_release ${CF_VERSION} ${DOCKER_REGISTRY} ${DOCKER_ORGANIZATION} ${DOCKER_TEAM_USERNAME} ${DOCKER_TEAM_PASSWORD_RW} ${STEMCELL_OS} ${stemcell_version} ${stemcell_image} ${RELEASE_NAME} ${RELEASE_URL} ${RELEASE_VERSION} ${RELEASE_SHA}

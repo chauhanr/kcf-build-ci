@@ -15,4 +15,4 @@ docker-registry: docker.io
 docker-organization: chauhanr
 dockerhub-username: chauhanr
 dockerhub-password:  
-stemcell-version: 42.3-51.g7fef1b7-30.95
+stemcell-version: SLE_15_SP1-23.7
