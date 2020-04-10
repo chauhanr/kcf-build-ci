@@ -1,5 +1,11 @@
 # This pipeline will setup the build for all the cf_deployment_releases specified below.
 
+resource_types:
+- name: file-url
+  type: docker-image
+  source:
+    repository: pivotalservices/concourse-curl-resource
+    tag: latest
 
 resources:
 - name: ci
