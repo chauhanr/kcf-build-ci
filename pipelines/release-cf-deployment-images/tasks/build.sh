@@ -22,7 +22,9 @@ trap 'stop_docker' EXIT
 echo "${DOCKER_TEAM_PASSWORD_RW}" | docker login "${DOCKER_REGISTRY}" --username "${DOCKER_TEAM_USERNAME}" --password-stdin
 
 # Extract the fissile binary.
-tar xvf ./s3.fissile-linux/fissile-4.3.tar.gz --directory "/usr/local/bin/"
+tar xvf ./s3.fissile-linux/fissile-4.3.tar.gz 
+chmod a+x fissile
+cp fissile /usr/local/bin/fissile
 
 # Pull the stemcell image.
 stemcell_version="${STEMCELL_VERSION}"
