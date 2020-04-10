@@ -47,7 +47,6 @@ jobs:
           s3.stemcell-version: s3.fissile-stemcell-version
           cf-deployment: cf-deployment-v12.18.0
         params:
-          GOPROXY: ((goproxy))
           STEMCELL_OS: ((stemcell-os))
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
