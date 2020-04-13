@@ -42,6 +42,7 @@ function build_release() {
 
   built_image=$(fissile build release-images --dry-run "${build_args[@]}" | cut -d' ' -f3)
   built_image_tag="${built_image#*:}"
+  echo -e "Built Image Tag: ${built_image_tag}"
   docker_creds_string=""${docker_username}":"${docker_password}""
 
   # Check if there is an image already pushed for the release being built, otherwise push.
@@ -49,8 +50,8 @@ function build_release() {
     echo -e "Skipping push for ${GREEN}${built_image}${NC} as it is already present in the registry..."
   else
       # Build the release image.
-      fissile build release-images "${build_args[@]}"
-
+      fissile build release-images "${build_args[@]}"   
+      docker images
       echo -e "Built image: ${GREEN}${built_image}${NC}"
       docker push "${built_image}"
       docker rmi "${built_image}"
