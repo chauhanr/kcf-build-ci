@@ -18,12 +18,12 @@ resources:
   source:
     uri: ((docker-image-resource-repo))
     branch: ((docker-image-resource-branch))
-- name: cf-deployment-v12.18.0
+- name: cf-deployment-v12.33.0
   type: git
   source:
     uri: ((cf-deployment-repo))
     branch: ((cf-deployment-branch))
-    tag_filter: v12.18.0
+    tag_filter: v12.33.0
 - name: s3.fissile-linux
   type: file-url
   source:
@@ -32,12 +32,12 @@ resources:
     skip-ssl-verification: true    
 
 jobs:
-  - name: build-v12.18.0-uaa
+  - name: build-v12.33.0-uaa
     plan:
     - in_parallel:
       - get: ci
       - get: docker-image-resource
-      - get: cf-deployment-v12.18.0
+      - get: cf-deployment-v12.33.0
       - get: s3.fissile-linux
     - do:
       - task: build
@@ -45,7 +45,7 @@ jobs:
         timeout: 1h30m
         input_mapping:
           s3.stemcell-version: s3.fissile-stemcell-version
-          cf-deployment: cf-deployment-v12.18.0
+          cf-deployment: cf-deployment-v12.33.0
         params:
           STEMCELL_OS: ((stemcell-os))
           STEMCELL_REPOSITORY: ((stemcell-repository))
