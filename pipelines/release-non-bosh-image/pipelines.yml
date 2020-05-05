@@ -15,20 +15,20 @@ resources:
 - name: eirini-release
   type: bosh-io-release
   source:
-    repository: cloudfoundry-incubator/eirini-release
-    regex: ((eirini-release-version)) 
+    repository: cloudfoundry-community/eirini-bosh-release
+    regexp: ((eirini-release-version)) 
 
 - name: bits-service-release
   type: bosh-io-release
   source:
     repository: cloudfoundry-incubator/bits-service-release
-    regex: ((eirini-release-version)) 
+    regexp: ((eirini-release-version)) 
 
 - name: app-autoscaler-release
   type: bosh-io-release
   source:
     repository: cloudfoundry/app-autoscaler-release
-    regex: ((app-autoscaler-release-version)) 
+    regexp: ((app-autoscaler-release-version)) 
 
 - name: s3.fissile-linux
   type: file-url
