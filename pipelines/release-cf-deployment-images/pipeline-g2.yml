@@ -1,0 +1,173 @@
+
+# This pipeline will setup the build for all the cf_deployment_releases specified below.
+# This has second group fo compoentns cf-cli, cflinuxfs3, cf-networking, cf-smoke-tests,
+# cf-syslog-drain 
+
+resource_types:
+- name: file-url
+  type: docker-image
+  source:
+    repository: pivotalservices/concourse-curl-resource
+    tag: latest
+
+resources:
+- name: ci
+  type: git
+  source:
+    uri: ((ci-repo))
+    branch: ((ci-branch))
+- name: docker-image-resource
+  type: git
+  source:
+    uri: ((docker-image-resource-repo))
+    branch: ((docker-image-resource-branch))
+- name: cf-deployment-((cf-release-version))
+  type: git
+  source:
+    uri: ((cf-deployment-repo))
+    branch: ((cf-deployment-branch))
+    tag_filter: ((cf-release-version)) 
+
+- name: s3.fissile-linux
+  type: file-url
+  source:
+    url: https://cf-opensusefs2.s3.amazonaws.com/fissile/develop/fissile-7.0.0%2B374.gb8e8e6af.linux-amd64.tgz
+    filename: fissile.tgz
+    skip-ssl-verification: true    
+
+jobs:
+  - name: build-((cf-release-version))-cf-cli
+    serial_groups: [ serial_group_2 ]
+    plan:
+    - in_parallel:
+      - get: ci
+      - get: docker-image-resource
+      - get: cf-deployment-((cf-release-version))
+      - get: s3.fissile-linux
+    - do:
+      - task: build
+        privileged: true
+        timeout: 1h30m
+        input_mapping:
+          s3.stemcell-version: s3.fissile-stemcell-version
+          cf-deployment: cf-deployment-((cf-release-version))
+        params:
+          STEMCELL_OS: ((stemcell-os))
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
+          CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+          RELEASE: cf-cli
+          DOCKER_REGISTRY: ((docker-registry))
+          DOCKER_ORGANIZATION: ((docker-organization))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          STEMCELL_VERSION: ((stemcell-version)) 
+        file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
+  - name: build-((cf-release-version))-cflinuxfs3
+    serial_groups: [ serial_group_2 ]
+    plan:
+    - in_parallel:
+      - get: ci
+      - get: docker-image-resource
+      - get: cf-deployment-((cf-release-version))
+      - get: s3.fissile-linux
+    - do:
+      - task: build
+        privileged: true
+        timeout: 1h30m
+        input_mapping:
+          s3.stemcell-version: s3.fissile-stemcell-version
+          cf-deployment: cf-deployment-((cf-release-version))
+        params:
+          STEMCELL_OS: ((stemcell-os))
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
+          CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+          RELEASE: cflinuxfs3
+          DOCKER_REGISTRY: ((docker-registry))
+          DOCKER_ORGANIZATION: ((docker-organization))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          STEMCELL_VERSION: ((stemcell-version)) 
+        file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
+  - name: build-((cf-release-version))-cf-networking
+    serial_groups: [ serial_group_2 ]
+    plan:
+    - in_parallel:
+      - get: ci
+      - get: docker-image-resource
+      - get: cf-deployment-((cf-release-version))
+      - get: s3.fissile-linux
+    - do:
+      - task: build
+        privileged: true
+        timeout: 1h30m
+        input_mapping:
+          s3.stemcell-version: s3.fissile-stemcell-version
+          cf-deployment: cf-deployment-((cf-release-version))
+        params:
+          STEMCELL_OS: ((stemcell-os))
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
+          CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+          RELEASE: cf-networking
+          DOCKER_REGISTRY: ((docker-registry))
+          DOCKER_ORGANIZATION: ((docker-organization))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          STEMCELL_VERSION: ((stemcell-version)) 
+        file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
+  - name: build-((cf-release-version))-cf-syslog-drain
+    serial_groups: [ serial_group_2 ]
+    plan:
+    - in_parallel:
+      - get: ci
+      - get: docker-image-resource
+      - get: cf-deployment-((cf-release-version))
+      - get: s3.fissile-linux
+    - do:
+      - task: build
+        privileged: true
+        timeout: 1h30m
+        input_mapping:
+          s3.stemcell-version: s3.fissile-stemcell-version
+          cf-deployment: cf-deployment-((cf-release-version))
+        params:
+          STEMCELL_OS: ((stemcell-os))
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
+          CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+          RELEASE: cf-syslog-drain
+          DOCKER_REGISTRY: ((docker-registry))
+          DOCKER_ORGANIZATION: ((docker-organization))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          STEMCELL_VERSION: ((stemcell-version)) 
+        file: ci/pipelines/release-cf-deployment-images/tasks/build.yml
+  - name: build-((cf-release-version))-cf-smoke-tests
+    serial_groups: [ serial_group_2 ]
+    plan:
+    - in_parallel:
+      - get: ci
+      - get: docker-image-resource
+      - get: cf-deployment-((cf-release-version))
+      - get: s3.fissile-linux
+    - do:
+      - task: build
+        privileged: true
+        timeout: 1h30m
+        input_mapping:
+          s3.stemcell-version: s3.fissile-stemcell-version
+          cf-deployment: cf-deployment-((cf-release-version))
+        params:
+          STEMCELL_OS: ((stemcell-os))
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSIONED_FILE: ((stemcell-version-file))
+          CF_DEPLOYMENT_YAML: ((cf-deployment-yaml))
+          RELEASE: cf-smoke-tests
+          DOCKER_REGISTRY: ((docker-registry))
+          DOCKER_ORGANIZATION: ((docker-organization))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          STEMCELL_VERSION: ((stemcell-version)) 
+        file: ci/pipelines/release-cf-deployment-images/tasks/build.yml

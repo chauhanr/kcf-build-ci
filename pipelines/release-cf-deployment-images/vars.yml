@@ -5,6 +5,7 @@ docker-image-resource-branch: master
 cf-deployment-repo: https://github.com/cloudfoundry/cf-deployment
 cf-deployment-branch: master
 cf-deployment-yaml: cf-deployment/cf-deployment.yml
+cf-release-version: v12.33.0
 fissile-linux-s3-bucket: cf-opensusefs2
 stemcell-os: ubi7
 stemcell-repository: chauhanr/ubi
