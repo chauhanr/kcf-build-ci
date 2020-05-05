@@ -1,3 +1,10 @@
+resource-type: 
+- name: file-url
+  type: docker-image
+  source:
+    repository: pivotalservices/concourse-curl-resource
+    tag: latest
+
 resources: 
 - name: ci 
   type: git 
@@ -6,7 +13,7 @@ resources:
     branch: ((ci-branch)) 
 - name: pxc-release
   type: bosh-io-release
-  soruce: 
+  source: 
     repository: cloudfoundry-incubator/pxc-release
     regexp: ((pxc-release-version))
 - name: s3.fissile-linux
@@ -27,7 +34,7 @@ jobs:
           tarball: false 
     - do:
       - task: build 
-        previledged: true 
+        privileged: true 
         timeout: 1h30m 
         input_mapping:
           release: pxc-release
@@ -36,7 +43,7 @@ jobs:
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSION: ((stemcell-version)) 
           RELEASE_NAME: pxc
-          DOCKER_TEAM_USERNAME: ((dockerhub.username))
-          DOCKER_TEAM_PASSWORD_RW: ((dockerhub.password))
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
           REGISTRY_NAMESPACE: ((docker-organization))  
         file: ci/pipelines/release-non-bosh-images/tasks/build.yml
