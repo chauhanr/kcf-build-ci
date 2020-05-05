@@ -1,0 +1,11 @@
+ci-repo: https://github.com/chauhanr/kcf-build-ci.git
+ci-branch: master
+docker-registry: docker.io
+docker-organization: chauhanr
+dockerhub-username: chauhanr
+dockerhub-password: 
+s3-bucket: cf-opensusefs2
+versions-s3-bucket: cf-operators
+stemcell-repository: chauhanr/ubi
+stemcell-version: 7.7-140
+pxc-release-version: v0.9.0

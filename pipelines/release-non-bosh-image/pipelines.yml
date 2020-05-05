@@ -1,0 +1,42 @@
+resources: 
+- name: ci 
+  type: git 
+  source: 
+    uri: ((ci-repo))
+    branch: ((ci-branch)) 
+- name: pxc-release
+  type: bosh-io-release
+  soruce: 
+    repository: cloudfoundry-incubator/pxc-release
+    regexp: ((pxc-release-version))
+- name: s3.fissile-linux
+  type: file-url
+  source:
+    url: https://cf-opensusefs2.s3.amazonaws.com/fissile/develop/fissile-7.0.0%2B374.gb8e8e6af.linux-amd64.tgz
+    filename: fissile.tgz
+    skip-ssl-verification: true
+
+jobs: 
+  - name: build-pxc-release-((pxc-release-version)) 
+    plan: 
+    - aggregate: 
+      - get: ci 
+      - get: s3.fissile-linux
+      - get: pxc-release
+        params: 
+          tarball: false 
+    - do:
+      - task: build 
+        previledged: true 
+        timeout: 1h30m 
+        input_mapping:
+          release: pxc-release
+          s3.fissile-version: s3.fissile-stemcell-version
+        params:
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSION: ((stemcell-version)) 
+          RELEASE_NAME: pxc
+          DOCKER_TEAM_USERNAME: ((dockerhub.username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub.password))
+          REGISTRY_NAMESPACE: ((docker-organization))  
+        file: ci/pipelines/release-non-bosh-images/tasks/build.yml
