@@ -46,7 +46,7 @@ resources:
 jobs: 
   - name: build-eirini-release-((eirini-release-version)) 
     plan: 
-    - aggregate: 
+    - in_parallel: 
       - get: ci 
       - get: s3.fissile-linux
       - get: eirini-release
@@ -69,7 +69,7 @@ jobs:
 
   - name: build-app-autoscaler-release-((app-autoscaler-release-version)) 
     plan: 
-    - aggregate: 
+    - in_parallel: 
       - get: ci 
       - get: s3.fissile-linux
       - get: app-autoscaler-release
@@ -92,7 +92,7 @@ jobs:
 
   - name: build-bits-service-release-((bits-service-release-version)) 
     plan: 
-    - aggregate: 
+    - in_parallel: 
       - get: ci 
       - get: s3.fissile-linux
       - get: bits-service-release
