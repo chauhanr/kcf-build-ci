@@ -12,28 +12,22 @@ resources:
     uri: ((ci-repo))
     branch: ((ci-branch)) 
 
-    #- name: pxc-release
-    #type: bosh-io-release
-    #source: 
-    #repository: cloudfoundry-incubator/pxc-release
-    #regexp: ((pxc-release-version))
-
 - name: eirini-release
   type: bosh-io-release
   source:
-    respository: cloudfoundry-incubator/eirini-release
+    repository: cloudfoundry-incubator/eirini-release
     regex: ((eirini-release-version)) 
 
 - name: bits-service-release
   type: bosh-io-release
   source:
-    respository: cloudfoundry-incubator/bits-service-release
+    repository: cloudfoundry-incubator/bits-service-release
     regex: ((eirini-release-version)) 
 
 - name: app-autoscaler-release
   type: bosh-io-release
   source:
-    respository: cloudfoundry/app-autoscaler-release
+    repository: cloudfoundry/app-autoscaler-release
     regex: ((app-autoscaler-release-version)) 
 
 - name: s3.fissile-linux
