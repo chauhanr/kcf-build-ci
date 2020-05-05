@@ -28,7 +28,7 @@ resources:
   type: bosh-io-release
   source:
     repository: cloudfoundry-incubator/app-autoscaler-release
-    regexp: ((app-autoscaler-release-version)) 
+    regexp: ((app-autoscaler-release-version:)) 
 
 - name: s3.fissile-linux
   type: file-url
