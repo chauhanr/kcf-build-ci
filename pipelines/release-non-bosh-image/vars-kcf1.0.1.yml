@@ -7,5 +7,10 @@ dockerhub-password:
 s3-bucket: cf-opensusefs2
 versions-s3-bucket: cf-operators
 stemcell-repository: chauhanr/ubi
-stemcell-version: 7.7-140
-pxc-release-version: 0.9.0
+stemcell-version: 7.7-150
+#stemcell-repository: splatform/fissile-stemcell-sle
+#stemcell-version: SLE_15_SP1-23.10
+pxc-release-version: 0.22.0
+eirini-release-version: 1.0.0
+bits-service-release-version: 2.28.0
+app-autoscaler-release-version: 3.0.0

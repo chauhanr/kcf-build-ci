@@ -11,11 +11,31 @@ resources:
   source: 
     uri: ((ci-repo))
     branch: ((ci-branch)) 
-- name: pxc-release
+
+    #- name: pxc-release
+    #type: bosh-io-release
+    #source: 
+    #repository: cloudfoundry-incubator/pxc-release
+    #regexp: ((pxc-release-version))
+
+- name: eirini-release
   type: bosh-io-release
-  source: 
-    repository: cloudfoundry-incubator/pxc-release
-    regexp: ((pxc-release-version))
+  source:
+    respository: cloudfoundry-community/eirini-release
+    regex: ((eirini-release-version)) 
+
+- name: bits-service-release
+  type: bosh-io-release
+  source:
+    respository: cloudfoundry-incubator/bits-service-release
+    regex: ((eirini-release-version)) 
+
+- name: app-autoscaler-release
+  type: bosh-io-release
+  source:
+    respository: cloudfoundry/app-autoscaler
+    regex: ((app-autoscaler-release-version)) 
+
 - name: s3.fissile-linux
   type: file-url
   source:
@@ -24,12 +44,12 @@ resources:
     skip-ssl-verification: true
 
 jobs: 
-  - name: build-pxc-release-((pxc-release-version)) 
+  - name: build-eirini-release-((eirini-release-version)) 
     plan: 
     - aggregate: 
       - get: ci 
       - get: s3.fissile-linux
-      - get: pxc-release
+      - get: eirini-release
         params: 
           tarball: false 
     - do:
@@ -37,12 +57,59 @@ jobs:
         privileged: true 
         timeout: 1h30m 
         input_mapping:
-          release: pxc-release
+          release: eirini-release
         params:
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSION: ((stemcell-version)) 
-          RELEASE_NAME: pxc
+          RELEASE_NAME: eirini
           DOCKER_TEAM_USERNAME: ((dockerhub-username))
           DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
           REGISTRY_NAMESPACE: ((docker-organization))  
         file: ci/pipelines/release-non-bosh-image/tasks/build.yml
+
+  - name: build-app-autoscaler-release-((app-autoscaler-release-version)) 
+    plan: 
+    - aggregate: 
+      - get: ci 
+      - get: s3.fissile-linux
+      - get: app-autoscaler-release
+        params: 
+          tarball: false 
+    - do:
+      - task: build 
+        privileged: true 
+        timeout: 1h30m 
+        input_mapping:
+          release: app-autoscaler-release
+        params:
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSION: ((stemcell-version)) 
+          RELEASE_NAME: app-autoscaler
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          REGISTRY_NAMESPACE: ((docker-organization))  
+        file: ci/pipelines/release-non-bosh-image/tasks/build.yml
+
+  - name: build-bits-service-release-((bits-service-release-version)) 
+    plan: 
+    - aggregate: 
+      - get: ci 
+      - get: s3.fissile-linux
+      - get: bits-service-release
+        params: 
+          tarball: false 
+    - do:
+      - task: build 
+        privileged: true 
+        timeout: 1h30m 
+        input_mapping:
+          release: bits-service-release
+        params:
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSION: ((stemcell-version)) 
+          RELEASE_NAME: bits-service
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          REGISTRY_NAMESPACE: ((docker-organization))  
+        file: ci/pipelines/release-non-bosh-image/tasks/build.yml
+
