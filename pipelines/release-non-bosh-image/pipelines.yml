@@ -18,6 +18,12 @@ resources:
     repository: cloudfoundry-community/eirini-bosh-release
     regexp: ((eirini-release-version)) 
 
+- name: cf-routing-release
+  type: bosh-io-release
+  source:
+    repository: cloudfoundry-incubator/cf-routing-release
+    regexp: ((cf-routing-release-version)) 
+
 - name: bits-service-release
   type: bosh-io-release
   source:
@@ -102,6 +108,29 @@ jobs:
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSION: ((stemcell-version)) 
           RELEASE_NAME: bits-service
+          DOCKER_TEAM_USERNAME: ((dockerhub-username))
+          DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
+          REGISTRY_NAMESPACE: ((docker-organization))  
+        file: ci/pipelines/release-non-bosh-image/tasks/build.yml
+
+  - name: build-cf-routing-release-((cf-routing-release-version)) 
+    plan: 
+    - in_parallel: 
+      - get: ci 
+      - get: s3.fissile-linux
+      - get: cf-routing-release
+        params: 
+          tarball: false 
+    - do:
+      - task: build 
+        privileged: true 
+        timeout: 1h30m 
+        input_mapping:
+          release: cf-routing-release
+        params:
+          STEMCELL_REPOSITORY: ((stemcell-repository))
+          STEMCELL_VERSION: ((stemcell-version)) 
+          RELEASE_NAME: cf-routing-release
           DOCKER_TEAM_USERNAME: ((dockerhub-username))
           DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
           REGISTRY_NAMESPACE: ((docker-organization))  
