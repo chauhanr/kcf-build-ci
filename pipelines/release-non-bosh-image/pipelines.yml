@@ -15,6 +15,7 @@ resources:
   type: bosh-io-release
   source: 
     repository: cloudfoundry-incubator/pxc-release
+    regexp: ((pxc-release-version))
 - name: s3.fissile-linux
   type: file-url
   source:
