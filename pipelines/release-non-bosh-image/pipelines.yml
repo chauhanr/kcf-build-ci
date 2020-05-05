@@ -45,4 +45,4 @@ jobs:
           DOCKER_TEAM_USERNAME: ((dockerhub-username))
           DOCKER_TEAM_PASSWORD_RW: ((dockerhub-password))
           REGISTRY_NAMESPACE: ((docker-organization))  
-        file: ci/pipelines/release-non-bosh-images/tasks/build.yml
+        file: ci/pipelines/release-non-bosh-image/tasks/build.yml

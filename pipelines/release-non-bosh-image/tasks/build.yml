@@ -18,4 +18,4 @@ params:
   DOCKER_TEAM_PASSWORD_RW: 
   REGISTRY_NAMESPACE: 
 run: 
-  path: ci/pipelines/release-non-bosh-images/tasks/build.sh
+  path: ci/pipelines/release-non-bosh-image/tasks/build.sh
