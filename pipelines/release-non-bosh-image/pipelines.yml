@@ -1,4 +1,4 @@
-resource-type: 
+resource-types: 
 - name: file-url
   type: docker-image
   source:
