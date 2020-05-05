@@ -37,7 +37,6 @@ jobs:
         timeout: 1h30m 
         input_mapping:
           release: pxc-release
-          s3.fissile-version: s3.fissile-stemcell-version
         params:
           STEMCELL_REPOSITORY: ((stemcell-repository))
           STEMCELL_VERSION: ((stemcell-version)) 

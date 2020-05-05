@@ -9,7 +9,6 @@ inputs:
 - name: release 
 - name: s3.fissile-linux
 - name: ci 
-- name: s3.stemcell-version
 params: 
   STEMCELL_REPOSITORY: 
   STEMCELL_VERSION: 
